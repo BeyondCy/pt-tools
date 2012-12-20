@@ -78,6 +78,8 @@ log-facility local7;
 subnet 10.0.0.0 netmask 255.255.255.0 {
   range 10.0.0.100 10.0.0.254;
   option routers 10.0.0.1;
+# Use 10.0.0.1 for Karmetasploit integration
+#  option domain-name-servers 10.0.0.1;
   option domain-name-servers 4.2.2.2;
   option domain-name-servers 128.8.5.2;
 }
@@ -99,8 +101,17 @@ fi
 
 print_normal "Chose an ESSID for the fake AP:"
 read essid
-print_normal "Starting airbase with ESSID $essid"
-airbase-ng -c 6 --essid $essid $MON_ITF 2>&1 > airbase.log &
+
+print_normal "Hide the ESSID? [Y/N]"
+read hide_essid
+if [ "Y" == "$hide_essid" ]; then
+   hidden_id="-X"
+else
+   hidden_id=""
+fi
+
+print_normal "Starting airbase with ESSID $essid" 
+airbase-ng -c 6 --essid $essid  $hidden_id $MON_ITF 2>&1 > airbase.log &
 # Spawn a new xterm with airbase log
 xterm -bg black -fg yellow -T Airbase-NG -e tail -f airbase.log &
 
@@ -155,12 +166,10 @@ fi
 # Restart
 dhcpd3 -d -f -cf fake_ap_dhcpd.conf at0 2>&1 > dhcpd3.log &
 
-# Spawn a new xterm with dhcp3 log
-xterm -bg black -fg green -T DHCPD3 -e tail -f dhcpd3.log  &
-
 # Spawn a new xterm with /va/log/messages logs
 xterm -bg black -fg red -T "/var/log/messagesw" -e tail -f /var/log/messages &
 
+# TODO: change xterm windows position
 # Wait forever
 while true; do 
    sleep 1000
