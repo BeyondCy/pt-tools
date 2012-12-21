@@ -167,9 +167,8 @@ fi
 dhcpd3 -d -f -cf fake_ap_dhcpd.conf at0 2>&1 > dhcpd3.log &
 
 # Spawn a new xterm with /va/log/messages logs
-xterm -bg black -fg red -T "/var/log/messagesw" -e tail -f /var/log/messages &
+xterm -geometry 96x24-20+50 -bg black -fg red -T "/var/log/messagesw" -e tail -f /var/log/messages &
 
-# TODO: change xterm windows position
 # Wait forever
 while true; do 
    sleep 1000
