@@ -93,7 +93,7 @@ read w_itf
 
 MON_ITF=$(airmon-ng start $w_itf | grep "monitor mode enabled" | cut -d " " -f 5 | cut -f 1 -d ")")
 if [ "" == "$MON_ITF" ]; then
-   print_error "airbase-ng start monitoring error. Exiting"
+   print_error "airmon-ng start monitoring error. Exiting"
    exit
 else
    print_ok "Monitoring started on $MON_ITF"
