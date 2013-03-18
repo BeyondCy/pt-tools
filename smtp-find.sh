@@ -3,7 +3,7 @@
 if [ -z "$1" ]; then
     echo "[*] Simple SMTP discovery script"
     echo "[*] Usage : $0 <hosts_file>"
-    echo "[*] Example : $0 hosts.txt out.txt"
+    echo "[*] Example : $0 hosts.txt"
     exit 0
 fi
 
