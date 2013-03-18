@@ -32,7 +32,8 @@ message = (
 	"From: %s\n"
 	"To: %s\n"
 	"Subject: %s\n"
-	"Content-type: text/html\n\n"
+	"Content-type: text/html\n"
+	"\n"	# newline before message body
 	"%s") % (sender, ", ".join(target), subject, data)
 
 # Send the mail
